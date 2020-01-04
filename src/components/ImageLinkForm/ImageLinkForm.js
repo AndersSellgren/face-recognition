@@ -1,7 +1,8 @@
 import React from 'react';
 import './ImageLinkForm.css'
 
-const ImageLinkForm = () => {
+const ImageLinkForm = ({onInputChange, textInput, onButtonSubmit, searchField}) => {
+
 	return (
 			<div>
 				<p style={{margin: '15px auto'}} className='f3 white'>
@@ -9,8 +10,9 @@ const ImageLinkForm = () => {
 				</p>
 				<div style={divStyle1}>
 					<div style={divStyle2}>
-						<input style={styleInput} type='text' />
-						<button className='btn' style={styleButton}> Detect </button>
+						<input  value={searchField.input} onChange={onInputChange} ref={textInput} style={styleInput} type='text' />
+						<button onClick={onButtonSubmit} className='btn' 
+						style={styleButton}> Detect </button>
 					</div>
 				</div>
 			</div>
@@ -46,6 +48,7 @@ const styleButton = {
 	color: 'white',
 	background: '#2C5364',
 	border: '2px solid grey',
+	fontWeight: 550,
 }
 
 

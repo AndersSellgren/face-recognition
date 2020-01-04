@@ -13,12 +13,14 @@ const Logo = () => {
 }
 
 const styleImg = {
-	width: '100%',
-  height: '100%'
+	width: '90%',
+  height: '90%',
+  cursor: 'pointer'
 }
 
 const styleTilt = {
-	marginLeft: 50, 
+	marginLeft: 20,
+	marginTop: 20, 
 	height: 100, 
 	width: 100,
 	color: 'black', 
