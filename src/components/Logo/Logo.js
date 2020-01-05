@@ -19,8 +19,7 @@ const styleImg = {
 }
 
 const styleTilt = {
-	marginLeft: 20,
-	marginTop: 20, 
+	margin: 20, 
 	height: 100, 
 	width: 100,
 	color: 'black', 

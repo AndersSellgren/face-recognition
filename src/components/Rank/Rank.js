@@ -6,7 +6,7 @@ const Rank = () => {
 				<div className='tc white f3'>
 					{'Selle, your current rank is....'}
 				</div>
-				<div className='tc white f1'>
+				<div className='tc white f1 pa3'>
 					{'#5'}
 				</div>
 			</div>
@@ -14,6 +14,7 @@ const Rank = () => {
 }
 
 const divStyle = {
+	alignText: 'center',
 	marginTop: '20px',
 	display: 'flex',
 	flexDirection: 'column',

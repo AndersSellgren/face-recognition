@@ -2,7 +2,7 @@ import React from 'react';
 import './ImageLinkForm.css'
 
 const ImageLinkForm = ({onInputChange, textInput, onButtonSubmit, searchField}) => {
-
+	// Not using useRef() hence textInput and ref={textInput} are superfluous
 	return (
 			<div>
 				<p style={{margin: '15px auto'}} className='f3 white'>
@@ -25,7 +25,7 @@ const divStyle1 = {
 }
 
 const divStyle2 = {
-	width: '700px',
+	width: '800px',
 	padding: '1rem',
 	margin: 'auto 10px',
 	boxShadow: '5px 5px 5px 5px #111',
@@ -33,22 +33,24 @@ const divStyle2 = {
 }
 
 const styleInput = {
-	width: '70%',
+	width: '75%',
 	padding: '0.5rem',
-	fontSize: '1.5rem',
+	fontSize: '1.2rem',
+	lineHeight: '1.5rem',
 	borderRadius: '5px',
 	border: '2px solid grey' 
 }
 
 const styleButton = {
-	width: '30%',
+	width: '25%',
 	padding: '0.5rem',
 	fontSize: '1.5rem',
+	lineHeight: '1.5rem',
 	borderRadius: '5px',
 	color: 'white',
 	background: '#2C5364',
 	border: '2px solid grey',
-	fontWeight: 550,
+	fontWeight: 600,
 }
 
 
