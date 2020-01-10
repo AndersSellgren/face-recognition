@@ -26,12 +26,18 @@ function App() {
   const [route, setRoute] = useState('signin')
   const [isSignedIn, setIsSignedIn] = useState(false)
   const textInput = useRef('');
+  const nameReg = useRef('');
+  const emailReg = useRef('');
+  const passwordReg = useRef('');
+  const emailSignIn = useRef('');
+  const passwordSignIn = useRef('');
 
   useEffect(() => {
     // console.log(textInput.current.value)
   }, [searchField])
 
   const onInputChange = (event) => {
+    event.preventDefault()
     // setSearchField(textInput.current.value)
     setSearchField({input: event.target.value})
   }
@@ -55,17 +61,21 @@ function App() {
   }
 
   const onButtonSubmit = (event) => {
+    event.preventDefault();
     setImageUrl(searchField.input);
     app.models.predict(Clarifai.FACE_DETECT_MODEL, searchField.input)
     .then(response => displayFaceBox(calculateFaceLocation(response)))
     .catch(err => console.log(err))
   }
 
-  const onRouteChange = (routeString) => {
+  const onRouteChange = (routeString, location) => {
     if (routeString === 'signout') {
       setIsSignedIn(false)
     } else if (routeString === 'home') {
       setIsSignedIn(true)
+      if (location === 'register') {
+        
+      }
     }
     setRoute(routeString)
   }
@@ -83,8 +93,10 @@ function App() {
             <FaceRecognition box={box} imageUrl={imageUrl}/>
           </div>
           :
-          route === 'signin' || route === 'signout' ? <SignIn onRouteChange={onRouteChange}/>
-          : <Register onRouteChange={onRouteChange}/>
+          route === 'signin' || route === 'signout' ? 
+          <SignIn onRouteChange={onRouteChange}/> :
+           <Register nameReg={nameReg} emailReg={emailReg} passwordReg={passwordReg} 
+           onRouteChange={onRouteChange}/>
         }
     </div>
   );
