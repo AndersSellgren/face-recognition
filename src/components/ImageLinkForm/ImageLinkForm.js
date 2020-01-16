@@ -1,7 +1,7 @@
 import React from 'react';
 import './ImageLinkForm.css'
 
-const ImageLinkForm = ({onInputChange, textInput, onButtonSubmit, searchField}) => {
+const ImageLinkForm = ({onInputChange, textInput, onPictureSubmit, searchField}) => {
 	// Not using useRef() hence textInput and ref={textInput} are superfluous
 	return (
 			<div>
@@ -11,7 +11,7 @@ const ImageLinkForm = ({onInputChange, textInput, onButtonSubmit, searchField}) 
 				<div style={divStyle1}>
 					<div style={divStyle2}>
 						<input  value={searchField.input} onChange={onInputChange} ref={textInput} style={styleInput} type='text' />
-						<button onClick={onButtonSubmit} className='btn' 
+						<button onClick={onPictureSubmit} className='btn' 
 						style={styleButton}> Detect </button>
 					</div>
 				</div>

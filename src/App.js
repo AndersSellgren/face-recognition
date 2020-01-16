@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Navigation from './components/Navigation/Navigation'
 import SignIn from './components/SignIn/SignIn'
 import Logo from './components/Logo/Logo'
@@ -23,18 +23,13 @@ function App() {
   const [searchField, setSearchField] = useState({input: ''});
   const [imageUrl, setImageUrl] = useState('');
   const [box, setBox] = useState({});
-  const [route, setRoute] = useState('signin')
-  const [isSignedIn, setIsSignedIn] = useState(false)
-  const textInput = useRef('');
-  const nameReg = useRef('');
-  const emailReg = useRef('');
-  const passwordReg = useRef('');
-  const emailSignIn = useRef('');
-  const passwordSignIn = useRef('');
+  const [route, setRoute] = useState('signin');
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [showSignInLink, setShowSignInLink] = useState(false);
+  const [user, setUser] = useState({});
 
-  useEffect(() => {
-    // console.log(textInput.current.value)
-  }, [searchField])
+  const textInput = useRef('');
+  
 
   const onInputChange = (event) => {
     event.preventDefault()
@@ -60,48 +55,67 @@ function App() {
     setBox(borders);
   }
 
-  const onButtonSubmit = (event) => {
+  const onPictureSubmit = (event) => {
     event.preventDefault();
     setImageUrl(searchField.input);
     app.models.predict(Clarifai.FACE_DETECT_MODEL, searchField.input)
-    .then(response => displayFaceBox(calculateFaceLocation(response)))
+    .then(response => {
+      if (response) {
+        fetch('http://localhost:3000/image', 
+          {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id: user.id})
+          }
+        ).then(response => response.json())
+        .then(data => setUser(prevState => {return { ...prevState, entries: data}}))
+
+        displayFaceBox(calculateFaceLocation(response))
+      }
+    })
     .catch(err => console.log(err))
+    console.log(user)
   }
 
-  const onRouteChange = (routeString, location) => {
+  // Change to switch!
+  const onRouteChange = (routeString) => {
     if (routeString === 'signout') {
       setIsSignedIn(false)
+      setShowSignInLink(false)
     } else if (routeString === 'home') {
       setIsSignedIn(true)
-      if (location === 'register') {
-        
-      }
-    }
+    } else if (routeString === 'register') {
+      setShowSignInLink(true)
+    } else if (routeString === 'signin') {
+      setShowSignInLink(false)
+    }   
+    
     setRoute(routeString)
   }
 
   return (
     <div className="App">
     	{/* <Particles className='particles' params={particleOptions} /> */}
-      <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} /> 
+      <Navigation isSignedIn={isSignedIn} showSignInLink={showSignInLink}
+      onRouteChange={onRouteChange} /> 
         { route === 'home' ?  
           <div>
             <Logo /> 
-            <Rank />
-            <ImageLinkForm textInput={textInput} onButtonSubmit={onButtonSubmit} 
+            <Rank name={user.name} entries={user.entries} />
+            <ImageLinkForm textInput={textInput} onPictureSubmit={onPictureSubmit} 
             onInputChange={onInputChange} searchField={searchField}/>
             <FaceRecognition box={box} imageUrl={imageUrl}/>
           </div>
           :
           route === 'signin' || route === 'signout' ? 
           <SignIn onRouteChange={onRouteChange}/> :
-           <Register nameReg={nameReg} emailReg={emailReg} passwordReg={passwordReg} 
-           onRouteChange={onRouteChange}/>
+           <Register setUser={setUser} onRouteChange={onRouteChange}/>
         }
     </div>
   );
 }
 
+// Particles is a very CPU demanding application
 // const particleOptions = {
 // 	particles: {
 // 		number: {
