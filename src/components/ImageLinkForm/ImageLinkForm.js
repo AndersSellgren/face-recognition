@@ -10,7 +10,7 @@ const ImageLinkForm = ({onInputChange, textInput, onPictureSubmit, searchField})
 				</p>
 				<div style={divStyle1}>
 					<div style={divStyle2}>
-						<input  value={searchField.input} onChange={onInputChange} ref={textInput} style={styleInput} type='text' />
+						<input  value={searchField} onChange={onInputChange} ref={textInput} style={styleInput} type='text' />
 						<button onClick={onPictureSubmit} className='btn' 
 						style={styleButton}> Detect </button>
 					</div>

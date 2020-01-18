@@ -1,16 +1,25 @@
-import React, { useRef } from 'react';
+import React, { useState,useEffect } from 'react';
 
-const SignIn = ({onRouteChange}) => {
+const SignIn = ({onRouteChange, setUser}) => {
 
-	// const [users, setUsers] = useState({})
-	const email = useRef('');
-  	const password = useRef('');
+  	const [email, setEmail] = useState('')
+  	const [password, setPassword] = useState('')
+  	
+  	const onChangeEmail = (event) => {
+  		setEmail(event.target.value)
+  	}
 
-	// useEffect(() => {
- //    	fetch('http://localhost:3000/')
- //    	.then(res => res.json())
- //    	.then(users => setUsers(users))
- //  	}, [])
+  	const onChangePassword = (event) => {
+  		setPassword(event.target.value)
+  	}
+
+  	useEffect(() => {
+	  	document.addEventListener('keypress', (event) => {
+	  		if(event.key === 'Enter') {
+	  			console.log(event.key)
+	  		}
+	  	})
+	}, [])
 
 	const onSubmitSignIn = async () => {
 		const response = await fetch('http://localhost:3000/signin',
@@ -19,23 +28,24 @@ const SignIn = ({onRouteChange}) => {
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify(
 					{
-						email: email.current.value,
-						password: password.current.value
+						email: email,
+						password: password
 					}
 				)
 			}
 		)
 		const data =  await response.json()
-		console.log(data)
-		if (data === 'Login Success!') {
+
+		if (data.id) {
+			setUser(data)
 			onRouteChange('home')
 		} else {
-			console.log('Wrong password')
+			console.log('Invalid user credentials')
 		}		 
 	}
 
 	return (
-			<article className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l center">
+			<div className="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l center">
 				<main className="pa4 black-80">
 				  <div className="measure center">
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -43,17 +53,18 @@ const SignIn = ({onRouteChange}) => {
 				      <div className="mt3">
 				        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
 				        <input className="pa2 input-reset ba bg-transparent hover-bg-moon-gray hover-black w-100" 
-				        type="email" name="email-address"  id="email-address" ref={email}/>
+				        type="email" name="email-address"  id="email-address" onChange={onChangeEmail}/>
 				      </div>
 				      <div className="mv3">
 				        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
 				        <input className="b pa2 input-reset ba bg-transparent hover-bg-moon-gray hover-black w-100" 
-				        type="password" name="password"  id="password" ref={password}/>
+				        type="password" name="password" id="password" onChange={onChangePassword}/>
 				      </div>
 				    </fieldset>
 				    <div className="">
 				      <input
-				      onClick={onSubmitSignIn} 
+				      onClick={onSubmitSignIn}
+				      id='button'
 				      className="b br3 ph3 pv2 input-reset ba b--black-90 bg-transparent grow pointer f6 dib" 
 				      type="submit" 
 				      value="Sign in"
@@ -64,7 +75,7 @@ const SignIn = ({onRouteChange}) => {
 				    </div>
 				  </div>
 				</main>
-			</article>
+			</div>
 		);
 }
 

@@ -1,24 +1,38 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 
 const Register = ({setUser, onRouteChange}) => {
 
-	const name = useRef('');
-  const email = useRef('');
-  const password = useRef('');
+	const [name, setName] = useState('');
+  	const [email, setEmail] = useState('');
+  	const [password, setPassword] = useState('');
 
-  const onSubmit = () => {
+  	const onChangeName = (event) => {
+  		setName(event.target.value)
+  	}
+
+  	const onChangeEmail = (event) => {
+  		setEmail(event.target.value)
+  	}
+
+  	const onChangePassword = (event) => {
+  		setPassword(event.target.value)
+  	}
+
+   const onSubmit = () => {
 		fetch('http://localhost:3000/register', {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
-				name: name.current.value,
-				email: email.current.value,
-				password: password.current.value
+				name: name,
+				email: email,
+				password: password
 			})
 		}).then(response => response.json())
-			.then(user => {
-				if (user) {
-					setUser(user)
+	     .then(data => {
+	     		console.log(data)
+	     		console.log(data.email)
+				if (data.id) {
+					setUser(data)
 					onRouteChange('home')
 				}
 			})
@@ -34,17 +48,17 @@ const Register = ({setUser, onRouteChange}) => {
 				      <div className="mt3">
 				        <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
 				        <input className="pa2 input-reset ba bg-transparent hover-bg-moon-gray hover-black w-100" 
-				        type="text" name="name"  id="name" ref={name} />
+				        type="text" name="name"  id="name" onChange={onChangeName} />
 				      </div>
 				      <div className="mt3">
 				        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
 				        <input className="pa2 input-reset ba bg-transparent hover-bg-moon-gray hover-black w-100" 
-				        type="email" name="email-address"  id="email-address" ref={email}/>
+				        type="email" name="email-address"  id="email-address" onChange={onChangeEmail}/>
 				      </div>
 				      <div className="mv3">
 				        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
 				        <input className="b pa2 input-reset ba bg-transparent hover-bg-moon-gray hover-black w-100" 
-				        type="password" name="password"  id="password" ref={password}/>
+				        type="password" name="password"  id="password" onChange={onChangePassword}/>
 				      </div>
 				    </fieldset>
 				    <div className="">
