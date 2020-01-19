@@ -59,7 +59,7 @@ function App() {
     event.preventDefault();
     setImageUrl(searchField);
     
-    fetch('http://localhost:3000/imageurl', 
+    fetch('https://floating-gorge-55661.herokuapp.com/imageurl', 
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -69,7 +69,7 @@ function App() {
     .then(response => response.json())
     .then(response => {
       if (response) {
-        fetch('http://localhost:3000/image', 
+        fetch('https://floating-gorge-55661.herokuapp.com/image', 
           {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
