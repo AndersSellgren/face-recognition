@@ -23,7 +23,7 @@ function App() {
         
   const [user, setUser] = useState(initialUser);
   const [searchField, setSearchField] = useState('');
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [box, setBox] = useState({});
   const [route, setRoute] = useState('signin');
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -93,7 +93,7 @@ function App() {
         setIsSignedIn(false)
         setShowSignInLink(false)
         setUser(initialUser)
-        setImageUrl(null);
+        setImageUrl("");
         setSearchField('');
         console.log(user)
         break;

@@ -14,7 +14,7 @@ const FaceRecognition = ({imageUrl, box}) => {
 	return (
 			<div style={divStyle1}>
 				<div style={divStyle2}>
-					<input type="image" id='inputImage' style={imgStyle} src={imageUrl} alt='Submit you picture!'/>
+					<input type="image" id='inputImage' style={imgStyle} src={imageUrl} alt=""/>
 					<div style={divStyle3()}></div>
 				</div>
 			</div>
