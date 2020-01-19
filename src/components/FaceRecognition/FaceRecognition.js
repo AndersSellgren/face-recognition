@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment as frag} from 'react';
 
 const FaceRecognition = ({imageUrl, box}) => {
 
@@ -14,8 +14,12 @@ const FaceRecognition = ({imageUrl, box}) => {
 	return (
 			<div style={divStyle1}>
 				<div style={divStyle2}>
-					<input type="image" id='inputImage' style={imgStyle} src={imageUrl} alt=""/>
-					<div style={divStyle3()}></div>
+					{ imageUrl !== "" ?
+					<frag> 
+						<input type="image" id='inputImage' style={imgStyle} src={imageUrl} alt=""/>
+						<div style={divStyle3()}></div>
+					</frag> 
+					: <frag></frag>}
 				</div>
 			</div>
 		);
@@ -31,7 +35,8 @@ const divStyle1 = {
 
 const divStyle2 = {
 	position: 'relative',
-	top: '1rem'
+	top: '1rem',
+	// border: 'none'
 }
 
 const imgStyle = {
